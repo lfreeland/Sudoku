@@ -59,6 +59,12 @@ namespace Sudoku
             AllCellCollections = allCollections;
         }
 
+        public void setCellValue(int rowNum, int colNum, int value)
+        {
+            Cell cell = Rows[rowNum].Cells[colNum];
+            setCellValue(cell, value);
+        }
+
         public void setCellValue(Cell cell, int value)
         {
             cell.Value = value;
@@ -70,7 +76,5 @@ namespace Sudoku
             Column column = Columns[cell.Column];
             column.RemovePossibility(value);
         }
-
-
     }
 }

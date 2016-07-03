@@ -17,7 +17,8 @@ namespace Sudoku
 
         public void Solve()
         {
-
+            SingleCellPossibilityApplier scpa = new SingleCellPossibilityApplier(_board);
+            OnlyPossibilityInCellCollectionApplier opicca = new OnlyPossibilityInCellCollectionApplier(_board); 
         }
     }
 }

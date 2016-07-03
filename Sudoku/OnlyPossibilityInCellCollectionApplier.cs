@@ -27,6 +27,11 @@ namespace Sudoku
                 foreach (CellCollection cc in _board.AllCellCollections)
                 {
                     List<Cell> possibilityCells = cc.Cells.Where(c => c.Possibilities.Values.Contains(possibility)).ToList();
+
+                    if (possibilityCells.Count == 1)
+                    {
+                        _board.setCellValue(possibilityCells[0], possibility);
+                    }
                 }
             }
         }
