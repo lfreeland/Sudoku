@@ -18,7 +18,23 @@ namespace Sudoku
         public void Solve()
         {
             SingleCellPossibilityApplier scpa = new SingleCellPossibilityApplier(_board);
-            OnlyPossibilityInCellCollectionApplier opicca = new OnlyPossibilityInCellCollectionApplier(_board); 
+            OnlyPossibilityInCellCollectionApplier opicca = new OnlyPossibilityInCellCollectionApplier(_board);
+
+            int remainingCellsToSolveCount = _board.remainingCellsToSolveCount();
+            Boolean cellsSet = true;
+
+            while (remainingCellsToSolveCount > 0 &&
+                   cellsSet)
+            {
+                scpa.Apply();
+                opicca.Apply();
+
+                int newRemainingCellsSet = _board.remainingCellsToSolveCount();
+                int numCellsSet = remainingCellsToSolveCount - newRemainingCellsSet;
+                remainingCellsToSolveCount = newRemainingCellsSet;
+
+                cellsSet = numCellsSet > 0;
+            }
         }
     }
 }

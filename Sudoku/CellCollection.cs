@@ -10,6 +10,11 @@ namespace Sudoku
     {
         public List<Cell> Cells { get; set; }
 
+        public CellCollection()
+        {
+            Cells = new List<Cell>();
+        }
+
         public void RemovePossibility(int possibility)
         {
             foreach (Cell cell in Cells)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +60,34 @@ namespace Sudoku
             AllCellCollections = allCollections;
         }
 
+        public Board(String boardString)
+            :this()
+        {
+            if (String.IsNullOrWhiteSpace(boardString))
+            {
+                throw new ArgumentNullException("The boardString is null or empty.");
+            }
+
+            if (boardString.Length != 81)
+            {
+                throw new ApplicationException("Expected the board string to have 81 characters representing 81 cells. There are " + boardString.Length + " characters.");
+            }
+
+            for (int i = 0; i < boardString.Length; ++i)
+            {
+                int row = i / 9;
+                int column = i % 9;
+
+                char valueChar = boardString[i];
+
+                if (valueChar != '0')
+                {
+                    int value = int.Parse(valueChar.ToString());
+                    setCellValue(row, column, value);
+                }
+            }
+        }
+
         public void setCellValue(int rowNum, int colNum, int value)
         {
             Cell cell = Rows[rowNum].Cells[colNum];
@@ -75,6 +104,46 @@ namespace Sudoku
 
             Column column = Columns[cell.Column];
             column.RemovePossibility(value);
+        }
+
+        public int remainingCellsToSolveCount()
+        {
+            int count = 0;
+
+            foreach (Row r in Rows)
+            {
+                foreach (Cell c in r.Cells)
+                {
+                    if (c.Value.HasValue == false)
+                    {
+                        ++count;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        public bool isSolved()
+        {
+            int count = remainingCellsToSolveCount();
+            return count == 0;
+        }
+
+        public void printValuesToOutput()
+        {
+            foreach (Row r in Rows)
+            {
+                foreach (Cell c in r.Cells)
+                {
+                    String valueStr = c.Value.HasValue ? c.Value.ToString() : "0";
+                    valueStr += " ";
+
+                    Debug.Write(valueStr);
+                }
+
+                Debug.Write(Environment.NewLine);
+            }
         }
     }
 }
