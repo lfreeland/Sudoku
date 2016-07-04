@@ -19,21 +19,25 @@ namespace Sudoku
         {
             SingleCellPossibilityApplier scpa = new SingleCellPossibilityApplier(_board);
             OnlyPossibilityInCellCollectionApplier opicca = new OnlyPossibilityInCellCollectionApplier(_board);
+            TwoOrThreePossibilitiesReducer totpr = new TwoOrThreePossibilitiesReducer(_board);
+            SquareLineReducer slr = new SquareLineReducer(_board);
 
-            int remainingCellsToSolveCount = _board.remainingCellsToSolveCount();
-            Boolean cellsSet = true;
+            int remainingPossibilitiesCount = _board.remainingPossibilitiesCount();
+            Boolean remainingPossibilitiesReduced = true;
 
-            while (remainingCellsToSolveCount > 0 &&
-                   cellsSet)
+            while (remainingPossibilitiesCount > 0 &&
+                   remainingPossibilitiesReduced)
             {
                 scpa.Apply();
                 opicca.Apply();
+                totpr.Apply();
+                slr.Apply();
 
-                int newRemainingCellsSet = _board.remainingCellsToSolveCount();
-                int numCellsSet = remainingCellsToSolveCount - newRemainingCellsSet;
-                remainingCellsToSolveCount = newRemainingCellsSet;
+                int newRemainingPossibilitiesCount = _board.remainingPossibilitiesCount();
+                int numPossibilitiesReduced = remainingPossibilitiesCount - newRemainingPossibilitiesCount;
+                remainingPossibilitiesCount = newRemainingPossibilitiesCount;
 
-                cellsSet = numCellsSet > 0;
+                remainingPossibilitiesReduced = numPossibilitiesReduced > 0;
             }
         }
     }

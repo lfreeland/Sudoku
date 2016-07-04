@@ -123,6 +123,24 @@ namespace Sudoku
 
             return count;
         }
+        
+        public int remainingPossibilitiesCount()
+        {
+            int count = 0;
+
+            foreach (Row r in Rows)
+            {
+                foreach (Cell c in r.Cells)
+                {
+                    if (c.Value.HasValue == false)
+                    {
+                        count += c.Possibilities.Count;
+                    }
+                }
+            }
+
+            return count;
+        }
 
         public bool isSolved()
         {
@@ -130,8 +148,9 @@ namespace Sudoku
             return count == 0;
         }
 
-        public void printValuesToOutput()
+        public void printDiagnosticsToOutput()
         {
+            Debug.WriteLine("VALUES");
             foreach (Row r in Rows)
             {
                 foreach (Cell c in r.Cells)
@@ -140,6 +159,20 @@ namespace Sudoku
                     valueStr += " ";
 
                     Debug.Write(valueStr);
+                }
+
+                Debug.Write(Environment.NewLine);
+            }
+
+            Debug.WriteLine("POSSIBILITIES");
+            foreach (Row r in Rows)
+            {
+                foreach (Cell c in r.Cells)
+                {
+                    String possibilitiesStr = "{" + String.Join(",", c.Possibilities.Values) + "}";
+                    possibilitiesStr += " ";
+
+                    Debug.Write(possibilitiesStr);
                 }
 
                 Debug.Write(Environment.NewLine);

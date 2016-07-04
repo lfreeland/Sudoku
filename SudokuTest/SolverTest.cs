@@ -60,7 +60,7 @@ namespace SudokuTest
             Solver solver = new Solver(easyBoard);
             solver.Solve();
 
-            easyBoard.printValuesToOutput();
+            easyBoard.printDiagnosticsToOutput();
 
             Assert.IsTrue(easyBoard.isSolved());
         }
@@ -87,7 +87,7 @@ namespace SudokuTest
             Solver solver = new Solver(easyBoard);
             solver.Solve();
 
-            easyBoard.printValuesToOutput();
+            easyBoard.printDiagnosticsToOutput();
 
             int remainingCellsToSolve = easyBoard.remainingCellsToSolveCount();
             Assert.IsTrue(easyBoard.isSolved());
@@ -210,7 +210,41 @@ namespace SudokuTest
             Solver solver = new Solver(evilBoard);
             solver.Solve();
 
-            evilBoard.printValuesToOutput();
+            evilBoard.printDiagnosticsToOutput();
+
+            Assert.IsTrue(evilBoard.isSolved());
+        }
+
+        [TestMethod]
+        public void SolveEvilBoardTest2()
+        {
+            // http://www.websudoku.com/?level=4&set_id=1959875216
+
+            String boardString = "000500006604000000005907000420000805009070200803000079000605700000000301100008000";
+
+            Board evilBoard = new Board(boardString);
+
+            Solver solver = new Solver(evilBoard);
+            solver.Solve();
+
+            evilBoard.printDiagnosticsToOutput();
+
+            Assert.IsTrue(evilBoard.isSolved());
+        }
+
+        [TestMethod]
+        public void SolveEvilBoardTest3()
+        {
+            // http://www.websudoku.com/?level=4&set_id=9186368588
+
+            String boardString = "100000900002049370000200060001007000570000083000800200030004000024530800008000004";
+
+            Board evilBoard = new Board(boardString);
+
+            Solver solver = new Solver(evilBoard);
+            solver.Solve();
+
+            evilBoard.printDiagnosticsToOutput();
 
             Assert.IsTrue(evilBoard.isSolved());
         }

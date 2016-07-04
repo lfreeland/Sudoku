@@ -12,6 +12,8 @@ namespace Sudoku
 
         public int ColumnEnd { get; private set; }
 
+        public List<Row> Rows { get; private set; }
+
         public Square(int rowStart, int rowEnd, int columnStart, int columnEnd, List<Row> rows)
         {
             RowStart = rowStart;
@@ -21,9 +23,13 @@ namespace Sudoku
 
             Cells = new List<Cell>();
 
+            Rows = new List<Row>();
+
             for (int rowNum = rowStart; rowNum <= rowEnd; ++rowNum)
             {
                 Row r = rows[rowNum];
+
+                Row squareRow = new Row(rowNum);
 
                 for (int columnNum = columnStart; columnNum <= columnEnd; ++columnNum)
                 {
@@ -31,7 +37,11 @@ namespace Sudoku
                     c.Square = this;
 
                     Cells.Add(c);
+
+                    squareRow.Cells.Add(c);
                 }
+
+                Rows.Add(squareRow);
             }
         }
     }

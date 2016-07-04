@@ -51,6 +51,9 @@
     <Compile Include="SingleCellPossibilityApplier.cs" />
     <Compile Include="Solver.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="SquareLineReducer.cs" />
+    <Compile Include="ThreePossibilityComboReducer.cs" />
+    <Compile Include="TwoOrThreePossibilitiesReducer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
