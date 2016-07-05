@@ -23,7 +23,7 @@ namespace Sudoku
             Values.Remove(possibility);
         }
 
-        public void RemoveAll(List<int> possibilitiesToRemove)
+        public void RemoveAll(IEnumerable<int> possibilitiesToRemove)
         {
             Values.RemoveAll(v => possibilitiesToRemove.Contains(v));
         }

@@ -21,6 +21,7 @@ namespace Sudoku
             OnlyPossibilityInCellCollectionApplier opicca = new OnlyPossibilityInCellCollectionApplier(_board);
             TwoOrThreePossibilitiesReducer totpr = new TwoOrThreePossibilitiesReducer(_board);
             SquareLineReducer slr = new SquareLineReducer(_board);
+            ThreePossibilityComboReducer tpcr = new ThreePossibilityComboReducer(_board);
 
             int remainingPossibilitiesCount = _board.remainingPossibilitiesCount();
             Boolean remainingPossibilitiesReduced = true;
@@ -32,6 +33,7 @@ namespace Sudoku
                 opicca.Apply();
                 totpr.Apply();
                 slr.Apply();
+                tpcr.Apply();
 
                 int newRemainingPossibilitiesCount = _board.remainingPossibilitiesCount();
                 int numPossibilitiesReduced = remainingPossibilitiesCount - newRemainingPossibilitiesCount;
