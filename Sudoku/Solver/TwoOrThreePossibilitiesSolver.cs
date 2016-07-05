@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Sudoku
+using Sudoku.Model;
+
+
+namespace Sudoku.Solver
 {
-    public class TwoOrThreePossibilitiesReducer
+    /// <summary>
+    /// This solver identifies two cells or three cells with each cell containing the same
+    /// set of possible values in each row, column, and square. If a set of cells is found,
+    /// the possibilities are eliminated from the rest of the cells in the row, column or square
+    /// the cells were found in.
+    /// </summary>
+    public class TwoOrThreePossibilitiesSolver : SolverBase
     {
-        private Board _board;
-
-        public TwoOrThreePossibilitiesReducer(Board board)
+        public override void Solve(Board board)
         {
-            _board = board;
-        }
-
-        public void Apply()
-        {
-            foreach (CellCollection cellCollection in _board.AllCellCollections)
+            foreach (CellCollection cellCollection in board.AllCellCollections)
             {
                 foreach (Cell c in cellCollection.Cells)
                 {

@@ -1,12 +1,35 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sudoku;
+using Sudoku.Model;
 
 namespace SudokuTest
 {
+    /// <summary>
+    /// Test class for solving Sudoku puzzles using the SudokuSolver class.
+    /// The tests comprise easy, medium, hard, and evil Sudoku boards from
+    /// http://www.websudoku.com.
+    /// </summary>
     [TestClass]
-    public class SolverTest
+    public class SudokuSolverTest
     {
+        private void solveSudokuBoardTest(String boardRepresentation)
+        {
+            Board board = new Board(boardRepresentation);
+
+            solveSudokuBoardTest(board);
+        }
+
+        private void solveSudokuBoardTest(Board board)
+        {
+            SudokuSolver solver = new SudokuSolver(board);
+            solver.Solve();
+
+            board.printDiagnosticsToOutput();
+
+            Assert.IsTrue(board.isSolved());
+        }
+
         [TestMethod]
         public void SolveEasyBoardTest()
         {
@@ -57,12 +80,7 @@ namespace SudokuTest
             easyBoard.setCellValue(8, 5, 3);
             easyBoard.setCellValue(8, 8, 9);
 
-            Solver solver = new Solver(easyBoard);
-            solver.Solve();
-
-            easyBoard.printDiagnosticsToOutput();
-
-            Assert.IsTrue(easyBoard.isSolved());
+            solveSudokuBoardTest(easyBoard);
         }
 
         [TestMethod]
@@ -80,17 +98,9 @@ namespace SudokuTest
                700500240
             */
 
-            String boardString = "069007005057802090400100673000010300900703002006050000543006001020401530700500240";
+            String boardReprsentation = "069007005057802090400100673000010300900703002006050000543006001020401530700500240";
 
-            Board easyBoard = new Board(boardString);
-
-            Solver solver = new Solver(easyBoard);
-            solver.Solve();
-
-            easyBoard.printDiagnosticsToOutput();
-
-            int remainingCellsToSolve = easyBoard.remainingCellsToSolveCount();
-            Assert.IsTrue(easyBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -98,14 +108,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=1&set_id=2011249977
 
-            String boardString = "096000012100729306302000000009080003213000857600050900000000508804516009560000130";
+            String boardReprsentation = "096000012100729306302000000009080003213000857600050900000000508804516009560000130";
 
-            Board easyBoard = new Board(boardString);
-
-            Solver solver = new Solver(easyBoard);
-            solver.Solve();
-
-            Assert.IsTrue(easyBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -113,14 +118,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=1&set_id=9792512768
 
-            String boardString = "005416300310200008069000010070500802601000703802003050090000580400009067006748900";
+            String boardReprsentation = "005416300310200008069000010070500802601000703802003050090000580400009067006748900";
 
-            Board easyBoard = new Board(boardString);
-
-            Solver solver = new Solver(easyBoard);
-            solver.Solve();
-
-            Assert.IsTrue(easyBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -128,14 +128,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=2&set_id=6094327244
 
-            String boardString = "000010900200093570600000800430700000060409030000001046009000005076940002001080000";
+            String boardReprsentation = "000010900200093570600000800430700000060409030000001046009000005076940002001080000";
 
-            Board mediumBoard = new Board(boardString);
-
-            Solver solver = new Solver(mediumBoard);
-            solver.Solve();
-
-            Assert.IsTrue(mediumBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -143,14 +138,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=2&set_id=2075924274
 
-            String boardString = "091000000000008000032079050014700920020060030086001540050930470000400000000000160";
+            String boardReprsentation = "091000000000008000032079050014700920020060030086001540050930470000400000000000160";
 
-            Board mediumBoard = new Board(boardString);
-
-            Solver solver = new Solver(mediumBoard);
-            solver.Solve();
-
-            Assert.IsTrue(mediumBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -158,14 +148,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=3&set_id=8385086993
 
-            String boardString = "004000008510607000000004620600100900030000050002009001097500000000908037400000500";
+            String boardReprsentation = "004000008510607000000004620600100900030000050002009001097500000000908037400000500";
 
-            Board hardBoard = new Board(boardString);
-
-            Solver solver = new Solver(hardBoard);
-            solver.Solve();
-
-            Assert.IsTrue(hardBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -173,14 +158,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=3&set_id=3008976820
 
-            String boardString = "005008100900000003001640000100000700076529810008000002000012500400000009002800400";
+            String boardReprsentation = "005008100900000003001640000100000700076529810008000002000012500400000009002800400";
 
-            Board hardBoard = new Board(boardString);
-
-            Solver solver = new Solver(hardBoard);
-            solver.Solve();
-
-            Assert.IsTrue(hardBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -188,14 +168,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=3&set_id=5745978098
 
-            String boardString = "800560720700001050600000409000080000008205300000010000301000008040100007082039006";
+            String boardReprsentation = "800560720700001050600000409000080000008205300000010000301000008040100007082039006";
 
-            Board hardBoard = new Board(boardString);
-
-            Solver solver = new Solver(hardBoard);
-            solver.Solve();
-
-            Assert.IsTrue(hardBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -203,16 +178,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=4&set_id=1304551528
 
-            String boardString = "750800001000000900004507000030100200601000804005008010000605400002000000400009063";
+            String boardReprsentation = "750800001000000900004507000030100200601000804005008010000605400002000000400009063";
 
-            Board evilBoard = new Board(boardString);
-
-            Solver solver = new Solver(evilBoard);
-            solver.Solve();
-
-            evilBoard.printDiagnosticsToOutput();
-
-            Assert.IsTrue(evilBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -220,16 +188,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=4&set_id=1959875216
 
-            String boardString = "000500006604000000005907000420000805009070200803000079000605700000000301100008000";
+            String boardReprsentation = "000500006604000000005907000420000805009070200803000079000605700000000301100008000";
 
-            Board evilBoard = new Board(boardString);
-
-            Solver solver = new Solver(evilBoard);
-            solver.Solve();
-
-            evilBoard.printDiagnosticsToOutput();
-
-            Assert.IsTrue(evilBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
 
         [TestMethod]
@@ -237,16 +198,9 @@ namespace SudokuTest
         {
             // http://www.websudoku.com/?level=4&set_id=9186368588
 
-            String boardString = "100000900002049370000200060001007000570000083000800200030004000024530800008000004";
+            String boardReprsentation = "100000900002049370000200060001007000570000083000800200030004000024530800008000004";
 
-            Board evilBoard = new Board(boardString);
-
-            Solver solver = new Solver(evilBoard);
-            solver.Solve();
-
-            evilBoard.printDiagnosticsToOutput();
-
-            Assert.IsTrue(evilBoard.isSolved());
+            solveSudokuBoardTest(boardReprsentation);
         }
     }
 }

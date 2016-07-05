@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Sudoku
+using Sudoku.Model;
+
+namespace Sudoku.Solver
 {
-    public class SquareLineReducer
+    /// <summary>
+    /// If a row or column in a square only has a possibility in it,
+    /// remove the possibilities from the rest of the row or column in the
+    /// other squares in that row or column because the possibilitiy
+    /// must be in that row or column in the square.
+    /// </summary>
+    public class SquareLineReducerSolver : SolverBase
     {
-        private Board _board;
-
-        public SquareLineReducer(Board board)
+        public override void Solve(Board board)
         {
-            _board = board;
-        }
-
-        public void Apply()
-        {
-            // If a row or column in a square only has a possibility in it,
-            // remove the possibilities from the rest of the row or column in the 
-            // other squares in that row or column because the possibilitiy
-            // must be in that row or column in the square.
-
             Possibilities possibilities = new Possibilities();
 
             foreach (int possibility in possibilities.Values)
             {
-                foreach (Square sq in _board.Squares)
+                foreach (Square sq in board.Squares)
                 {
                     HashSet<int> rowsContainingPossibility = new HashSet<int>();
                     HashSet<int> columnsContainingPossibility = new HashSet<int>();
@@ -42,7 +35,7 @@ namespace Sudoku
 
                     if (rowsContainingPossibility.Count == 1)
                     {
-                        Row row = _board.Rows[rowsContainingPossibility.First()];
+                        Row row = board.Rows[rowsContainingPossibility.First()];
 
                         foreach (Cell rowCell in row.Cells)
                         {
@@ -58,7 +51,7 @@ namespace Sudoku
 
                     if (columnsContainingPossibility.Count == 1)
                     {
-                        Column column = _board.Columns[columnsContainingPossibility.First()];
+                        Column column = board.Columns[columnsContainingPossibility.First()];
 
                         foreach (Cell columnCell in column.Cells)
                         {

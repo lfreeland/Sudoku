@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Sudoku
+using Sudoku.Model;
+
+namespace Sudoku.Model
 {
+    /// <summary>
+    /// A row of cells on a Sudoku board.
+    /// </summary>
     public class Row : CellCollection
     {
+        /// <summary>
+        /// The zero-based row number of this row on the Sudoku board.
+        /// </summary>
         public int RowNumber { get; private set; }
 
+        /// <summary>
+        /// Constructs a row of cells with the given row number.
+        /// The cells in the row are instantiated.
+        /// </summary>
+        /// <param name="rowNumber"></param>
         public Row(int rowNumber)
         {
             RowNumber = rowNumber;
