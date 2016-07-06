@@ -18,7 +18,8 @@ namespace Sudoku
             new SquareLineReducerSolver(),
             new GenericPossibilityComboSolver(2),
             new GenericPossibilityComboSolver(3),
-            new GenericPossibilityComboSolver(4)
+            new GenericPossibilityComboSolver(4),
+            new XWingSolver()
         };
 
         /// <summary>

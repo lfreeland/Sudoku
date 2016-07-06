@@ -51,7 +51,7 @@ namespace Sudoku.Model
             Values = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         }
 
-        public void RemoveAllExcept(List<int> possibilitiesToKeep)
+        public void RemoveAllExcept(IEnumerable<int> possibilitiesToKeep)
         {
             Values.RemoveAll(v => possibilitiesToKeep.Contains(v) == false);
         }

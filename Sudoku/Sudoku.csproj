@@ -54,6 +54,7 @@
     <Compile Include="Model\Row.cs" />
     <Compile Include="Solver\SingleCellPossibilitySolver.cs" />
     <Compile Include="Solver\SolverBase.cs" />
+    <Compile Include="Solver\XWingSolver.cs" />
     <Compile Include="SudokuSolver.cs" />
     <Compile Include="Model\Square.cs" />
     <Compile Include="Solver\SquareLineReducerSolver.cs" />
