@@ -24,7 +24,7 @@ namespace Sudoku.Solver
                     HashSet<int> rowsContainingPossibility = new HashSet<int>();
                     HashSet<int> columnsContainingPossibility = new HashSet<int>();
 
-                    foreach (Cell c in sq.Cells)
+                    foreach (Cell c in sq.UnsolvedCells)
                     {
                         if (c.Possibilities.Values.Contains(possibility))
                         {
@@ -37,7 +37,7 @@ namespace Sudoku.Solver
                     {
                         Row row = board.Rows[rowsContainingPossibility.First()];
 
-                        foreach (Cell rowCell in row.Cells)
+                        foreach (Cell rowCell in row.UnsolvedCells)
                         {
                             if (rowCell.Column >= sq.ColumnStart &&
                                 rowCell.Column <= sq.ColumnEnd)
@@ -53,7 +53,7 @@ namespace Sudoku.Solver
                     {
                         Column column = board.Columns[columnsContainingPossibility.First()];
 
-                        foreach (Cell columnCell in column.Cells)
+                        foreach (Cell columnCell in column.UnsolvedCells)
                         {
                             if (columnCell.Row >= sq.RowStart &&
                                 columnCell.Row <= sq.RowEnd)

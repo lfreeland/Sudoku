@@ -20,7 +20,7 @@ namespace Sudoku.Solver
         {
             foreach (CellCollection cellCollection in board.AllCellCollections)
             {
-                List<PossibilityMatch> matches = findPossibilityMatches(cellCollection.Cells);
+                List<PossibilityMatch> matches = findPossibilityMatches(cellCollection.UnsolvedCells.ToList());
 
                 foreach (PossibilityMatch match in matches)
                 {

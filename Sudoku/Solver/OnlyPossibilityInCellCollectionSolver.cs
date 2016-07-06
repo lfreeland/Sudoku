@@ -23,7 +23,7 @@ namespace Sudoku.Solver
 
                 foreach (CellCollection cc in board.AllCellCollections)
                 {
-                    List<Cell> possibilityCells = cc.Cells.Where(c => c.Possibilities.Values.Contains(possibility)).ToList();
+                    List<Cell> possibilityCells = cc.UnsolvedCells.Where(c => c.Possibilities.Values.Contains(possibility)).ToList();
 
                     if (possibilityCells.Count == 1)
                     {

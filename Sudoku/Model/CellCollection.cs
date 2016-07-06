@@ -16,6 +16,14 @@ namespace Sudoku.Model
         /// </summary>
         public List<Cell> Cells { get; set; }
 
+        public IEnumerable<Cell> UnsolvedCells
+        {
+            get
+            {
+                return Cells.Where(c => c.Value.HasValue == false);
+            }
+        }
+
         public CellCollection()
         {
             Cells = new List<Cell>();
