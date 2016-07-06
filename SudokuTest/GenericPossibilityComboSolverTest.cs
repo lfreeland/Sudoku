@@ -13,14 +13,23 @@ namespace SudokuTest
     [TestClass]
     public class GenericPossibilityComboSolverTest
     {
-        [TestMethod]
-        public void findTwoIdenticalPossibilitiesInTwoCellsTest()
+        private Row createRowWithDesiredNumberOfColumns(int desiredNumberOfColumns)
         {
             Row row = new Row();
-            for (int column = 0; column <= 6; ++column)
+            int numberOfCellsToClear = row.Cells.Count - desiredNumberOfColumns;
+
+            for (int column = 0; column < numberOfCellsToClear; ++column)
             {
                 row.Cells[column].Possibilities.Values.Clear();
             }
+
+            return row;
+        }
+
+        [TestMethod]
+        public void findTwoIdenticalPossibilitiesInTwoCellsTest()
+        {
+            Row row = createRowWithDesiredNumberOfColumns(2);
 
             row.Cells[7].Possibilities.RemoveAllExcept(new List<int> { 2, 3 });
             row.Cells[8].Possibilities.RemoveAllExcept(new List<int> { 2, 3 });
@@ -47,17 +56,13 @@ namespace SudokuTest
         [TestMethod]
         public void findThreeIdenticalPossibilitiesInThreeCellsTest()
         {
-            Row row = new Row();
-            for (int column = 0; column <= 5; ++column)
-            {
-                row.Cells[column].Possibilities.Values.Clear();
-            }
+            Row row = createRowWithDesiredNumberOfColumns(3);
 
             row.Cells[6].Possibilities.RemoveAllExcept(new List<int> { 1, 2, 3 });
             row.Cells[7].Possibilities.RemoveAllExcept(new List<int> { 1, 2, 3 });
             row.Cells[8].Possibilities.RemoveAllExcept(new List<int> { 1, 2, 3 });
 
-            Assert.AreEqual(3, row.Cells[7].Possibilities.Count, "The cell in column 6 does not have three possibilities.");
+            Assert.AreEqual(3, row.Cells[6].Possibilities.Count, "The cell in column 6 does not have three possibilities.");
             Assert.AreEqual(3, row.Cells[7].Possibilities.Count, "The cell in column 7 does not have three possibilities.");
             Assert.AreEqual(3, row.Cells[8].Possibilities.Count, "The cell in column 8 does not have three possibilities.");
 
@@ -81,21 +86,13 @@ namespace SudokuTest
         [TestMethod]
         public void findTwoMatchesFromTwoIdenticalPossibilitiesInFourCellsTest()
         {
-            Row row = new Row();
-            for (int column = 0; column <= 4; ++column)
-            {
-                row.Cells[column].Possibilities.Values.Clear();
-            }
-
-            List<int> firstPossibilitiesToRemove = Enumerable.Range(1, 7).ToList();
+            Row row = createRowWithDesiredNumberOfColumns(4);
 
             row.Cells[7].Possibilities.RemoveAllExcept(new List<int> { 8, 9 });
             row.Cells[8].Possibilities.RemoveAllExcept(new List<int> { 8, 9 });
 
             Assert.AreEqual(2, row.Cells[7].Possibilities.Count, "The cell in column 7 does not have two possibilities.");
             Assert.AreEqual(2, row.Cells[8].Possibilities.Count, "The cell in column 8 does not have two possibilities.");
-
-            List<int> secondPossibilitiesToRemove = Enumerable.Range(3, 7).ToList();
 
             row.Cells[5].Possibilities.RemoveAllExcept(new List<int> { 1, 2 });
             row.Cells[6].Possibilities.RemoveAllExcept(new List<int> { 1, 2 });
@@ -132,11 +129,7 @@ namespace SudokuTest
         [TestMethod]
         public void findMatchesFromThreeCellsWithThePossibilityPattern_AB_BC_ACTest()
         {
-            Row row = new Row();
-            for (int column = 0; column <= 5; ++column)
-            {
-                row.Cells[column].Possibilities.Values.Clear();
-            }
+            Row row = createRowWithDesiredNumberOfColumns(3);
 
             // Use possibilities 7,8,9 in the {a,b}, {b,c}, {a,c} pattern.
 
@@ -171,11 +164,7 @@ namespace SudokuTest
         [TestMethod]
         public void findMatchesFromThreeCellsWithThePossibilityPattern_AB_BC_ABCTest()
         {
-            Row row = new Row();
-            for (int column = 0; column <= 5; ++column)
-            {
-                row.Cells[column].Possibilities.Values.Clear();
-            }
+            Row row = createRowWithDesiredNumberOfColumns(3);
 
             // Use possibilities 7,8,9 in the {a,b}, {b,c}, {a,b,c} pattern.
 
@@ -209,11 +198,7 @@ namespace SudokuTest
         [TestMethod]
         public void findMatchesFromThreeCellsWithThePossibilityPattern_AB_ABC_ABCTest()
         {
-            Row row = new Row();
-            for (int column = 0; column <= 5; ++column)
-            {
-                row.Cells[column].Possibilities.Values.Clear();
-            }
+            Row row = createRowWithDesiredNumberOfColumns(3);
 
             // Use possibilities 7,8,9 in the {a,b}, {b,c}, {a,b,c} pattern.
 
