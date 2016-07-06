@@ -202,5 +202,15 @@ namespace SudokuTest
 
             solveSudokuBoardTest(boardReprsentation);
         }
+
+        [TestMethod]
+        public void SolveExtremeBoardTest1()
+        {
+            // http://www.extremesudoku.info/sudoku.html
+
+            String boardReprsentation = "000005000020080050403000602002000001070050060300000400804000903060030010000700000";
+
+            solveSudokuBoardTest(boardReprsentation);
+        }
     }
 }
