@@ -211,6 +211,8 @@ namespace Sudoku.Model
         /// </summary>
         public void printDiagnosticsToOutput()
         {
+            Dictionary<int, int> columnMaxPossibilities = new Dictionary<int, int>();
+
             Debug.WriteLine("VALUES");
             foreach (Row r in Rows)
             {
@@ -220,6 +222,15 @@ namespace Sudoku.Model
                     valueStr += " ";
 
                     Debug.Write(valueStr);
+
+                    if (!columnMaxPossibilities.ContainsKey(c.Column))
+                    {
+                        columnMaxPossibilities[c.Column] = c.Possibilities.Count;
+                    }
+                    else if (columnMaxPossibilities[c.Column] < c.Possibilities.Count)
+                    {
+                        columnMaxPossibilities[c.Column] = c.Possibilities.Count;
+                    }
                 }
 
                 Debug.Write(Environment.NewLine);
@@ -230,7 +241,25 @@ namespace Sudoku.Model
             {
                 foreach (Cell c in r.Cells)
                 {
-                    String possibilitiesStr = "{" + String.Join(",", c.Possibilities.Values) + "}";
+                    int columnMaxPossibility = columnMaxPossibilities[c.Column];
+                    int maxColumnWidth = columnMaxPossibility + (columnMaxPossibility - 1);
+
+                    int paddingNeeded = maxColumnWidth;
+
+                    if (c.Possibilities.Count > 0)
+                    {
+                        paddingNeeded -= (c.Possibilities.Count + c.Possibilities.Count - 1);
+                    }
+
+                    String padding = String.Empty;
+
+                    for (int i = 0; i < paddingNeeded; ++i)
+                    {
+                        padding += " ";
+                    }
+
+                    String possibilitiesStr = "{" + String.Join(",", c.Possibilities.Values) + padding + "}";
+
                     possibilitiesStr += " ";
 
                     Debug.Write(possibilitiesStr);
