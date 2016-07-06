@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Sudoku.Model;
@@ -12,9 +13,10 @@ namespace Sudoku.Solver
     /// from the rest of the cell collection since those possibilities
     /// can only be in those 4 cells.
     /// </summary>
+    [Obsolete("Use the GenericPossibilityComboSolver with a value of 4 for 'numberOfPossibilities' instead", true)]
     public class FourPossibilityComboSolver : PossibilityComboReducerBase
     {
-        protected override List<PossibilityMatch> findPossibilityMatches(List<Cell> possibilityCells)
+        public override List<PossibilityMatch> findPossibilityMatches(List<Cell> possibilityCells)
         {
             List<PossibilityMatch> matches = new List<PossibilityMatch>();
 

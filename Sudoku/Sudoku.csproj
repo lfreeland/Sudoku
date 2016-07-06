@@ -45,6 +45,7 @@
     <Compile Include="Model\CellCollection.cs" />
     <Compile Include="Model\Column.cs" />
     <Compile Include="Solver\FourPossibilityComboSolver.cs" />
+    <Compile Include="Solver\GenericPossibilityComboSolver.cs" />
     <Compile Include="Solver\OnlyPossibilityInCellCollectionSolver.cs" />
     <Compile Include="Model\Possibilities.cs" />
     <Compile Include="Solver\PossibilityComboReducerBase.cs" />

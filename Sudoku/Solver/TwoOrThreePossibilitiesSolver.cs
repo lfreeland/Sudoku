@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Sudoku.Model;
-
 
 namespace Sudoku.Solver
 {
@@ -12,6 +12,7 @@ namespace Sudoku.Solver
     /// the possibilities are eliminated from the rest of the cells in the row, column or square
     /// the cells were found in.
     /// </summary>
+    [Obsolete("Use two GenericPossibilityComboSolver, one with a value of 2 for 'numberOfPossibilities' and the second with a value of 3 for 'numberOfPossibilities'. The GenericPossibilityComboSolver handles these use cases already and there's no need to duplicate code.", true)]
     public class TwoOrThreePossibilitiesSolver : SolverBase
     {
         public override void Solve(Board board)

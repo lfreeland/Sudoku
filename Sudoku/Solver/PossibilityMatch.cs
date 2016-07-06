@@ -18,7 +18,7 @@ namespace Sudoku.Solver
         /// <summary>
         /// The N possible values in the match.
         /// </summary>
-        public HashSet<int> Possibilities { get; set; }
+        public SortedSet<int> Possibilities { get; set; }
 
         public PossibilityMatch()
         {

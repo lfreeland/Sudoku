@@ -15,10 +15,10 @@ namespace Sudoku
         private List<SolverBase> _solvers = new List<SolverBase> {
             new SingleCellPossibilitySolver(),
             new OnlyPossibilityInCellCollectionSolver(),
-            new TwoOrThreePossibilitiesSolver(),
             new SquareLineReducerSolver(),
-            new ThreePossibilityComboSolver(),
-            new FourPossibilityComboSolver()
+            new GenericPossibilityComboSolver(2),
+            new GenericPossibilityComboSolver(3),
+            new GenericPossibilityComboSolver(4)
         };
 
         /// <summary>

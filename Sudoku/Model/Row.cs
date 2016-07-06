@@ -36,5 +36,14 @@ namespace Sudoku.Model
 
             Cells = myCells;
         }
+
+        /// <summary>
+        /// Creates a generic row with a row number of zero.
+        /// </summary>
+        public Row()
+           : this(0)
+        {
+
+        }
     }
 }

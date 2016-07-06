@@ -35,11 +35,16 @@ namespace Sudoku.Solver
             }
         }
 
-        protected abstract List<PossibilityMatch> findPossibilityMatches(List<Cell> possibilityCells);
+        /// <summary>
+        /// Finds the possibility matches in the given set of possibilityCells.
+        /// </summary>
+        /// <param name="possibilityCells">The cells to search for possibility combination matches.</param>
+        /// <returns>The list of possibility matches.</returns>
+        public abstract List<PossibilityMatch> findPossibilityMatches(List<Cell> possibilityCells);
 
         protected void addMatchIfFound(List<Cell> possibleMatchingCells, int numberOfPossibilities, List<PossibilityMatch> matches)
         {
-            HashSet<int> cellsPossibilities = new HashSet<int>();
+            SortedSet<int> cellsPossibilities = new SortedSet<int>();
 
             foreach (Cell c in possibleMatchingCells)
             {
@@ -47,7 +52,7 @@ namespace Sudoku.Solver
             }
 
             if (cellsPossibilities.Count == numberOfPossibilities &&
-                matches.Where(m => m.Possibilities != cellsPossibilities).ToList().Count == 0)
+                matches.Where(m => m.Possibilities.SequenceEqual(cellsPossibilities)).ToList().Count == 0)
             {
                 PossibilityMatch match = new PossibilityMatch();
                 match.Cells.AddRange(possibleMatchingCells);
