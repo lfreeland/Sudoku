@@ -38,7 +38,7 @@ namespace Sudoku.Model
 
             for (int i = 0; i < numCells; ++i)
             {
-                Cell c = new Cell();
+                Cell c = new Cell(numCells);
                 c.Row = RowNumber;
                 c.Column = i;
 

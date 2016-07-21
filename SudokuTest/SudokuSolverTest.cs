@@ -264,5 +264,101 @@ namespace SudokuTest
 
             solve6x6SudokuBoardTest(sixBySixBoardRepresentation);
         }
+
+        [TestMethod]
+        public void Solve12x12BoardTest1()
+        {
+            // http://12x12sudoku.com/ #100075
+
+            Square row1Left = new Square(0, 2, 0, 3);
+            Square row1Middle = new Square(0, 2, 4, 7);
+            Square row1Right = new Square(0, 2, 8, 11);
+
+            Square row2Left = new Square(3, 5, 0, 3);
+            Square row2Middle = new Square(3, 5, 4, 7);
+            Square row2Right = new Square(3, 5, 8, 11);
+
+            Square row3Left = new Square(6, 8, 0, 3);
+            Square row3Middle = new Square(6, 8, 4, 7);
+            Square row3Right = new Square(6, 8, 8, 11);
+
+            Square row4Left = new Square(9, 11, 0, 3);
+            Square row4Middle = new Square(9, 11, 4, 7);
+            Square row4Right = new Square(9, 11, 8, 11);
+
+            List<Square> squares = new List<Square> { row1Left, row1Middle, row1Right, row2Left, row2Middle, row2Right, row3Left, row3Middle, row3Right, row4Left, row4Middle, row4Right };
+            Board b = new Board(12, squares);
+
+            b.setCellValue(0, 0, 3);
+            b.setCellValue(0, 3, 12);
+            b.setCellValue(0, 7, 10);
+            b.setCellValue(0, 8, 4);
+            b.setCellValue(0, 10, 9);
+            b.setCellValue(0, 11, 8);
+
+            b.setCellValue(1, 0, 7);
+            b.setCellValue(1, 1, 10);
+            b.setCellValue(1, 4, 1);
+            b.setCellValue(1, 8, 3);
+            b.setCellValue(1, 10, 6);
+
+            b.setCellValue(2, 2, 1);
+            b.setCellValue(2, 6, 6);
+            b.setCellValue(2, 9, 10);
+
+
+            b.setCellValue(3, 0, 5);
+            b.setCellValue(3, 1, 6);
+            b.setCellValue(3, 5, 8);
+            b.setCellValue(3, 6, 10);
+            b.setCellValue(3, 7, 1);
+            b.setCellValue(3, 11, 4);
+
+            b.setCellValue(4, 0, 10);
+            b.setCellValue(4, 3, 8);
+            b.setCellValue(4, 10, 12);
+
+            b.setCellValue(5, 2, 3);
+            b.setCellValue(5, 3, 9);
+            b.setCellValue(5, 5, 12);
+            b.setCellValue(5, 6, 11);
+            b.setCellValue(5, 8, 2);
+
+            b.setCellValue(6, 3, 6);
+            b.setCellValue(6, 5, 3);
+            b.setCellValue(6, 6, 1);
+            b.setCellValue(6, 8, 11);
+            b.setCellValue(6, 9, 5);
+
+            b.setCellValue(7, 1, 3);
+            b.setCellValue(7, 8, 12);
+            b.setCellValue(7, 11, 6);
+
+            b.setCellValue(8, 0, 11);
+            b.setCellValue(8, 4, 12);
+            b.setCellValue(8, 5, 6);
+            b.setCellValue(8, 6, 5);
+            b.setCellValue(8, 10, 3);
+            b.setCellValue(8, 11, 9);
+
+            b.setCellValue(9, 2, 5);
+            b.setCellValue(9, 5, 9);
+            b.setCellValue(9, 9, 11);
+
+            b.setCellValue(10, 1, 12);
+            b.setCellValue(10, 3, 11);
+            b.setCellValue(10, 7, 8);
+            b.setCellValue(10, 10, 5);
+            b.setCellValue(10, 11, 7);
+
+            b.setCellValue(11, 0, 9);
+            b.setCellValue(11, 1, 8);
+            b.setCellValue(11, 3, 3);
+            b.setCellValue(11, 4, 5);
+            b.setCellValue(11, 8, 1);
+            b.setCellValue(11, 11, 12);
+
+            solveSudokuBoardTest(b);
+        }
     }
 }

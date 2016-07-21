@@ -53,15 +53,6 @@ namespace Sudoku.Model
         }
 
         /// <summary>
-        /// Creates the cell with 9 possibilities.
-        /// </summary>
-        public Cell()
-            : this(9)
-        {
-
-        }
-
-        /// <summary>
         /// Creates a cell with the specified number of possibilities in it.
         /// </summary>
         /// <param name="numPossibilities">The number of possibilities in the cell from 1 to numPossibilities.</param>
