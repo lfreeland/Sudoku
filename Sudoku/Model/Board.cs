@@ -79,6 +79,7 @@ namespace Sudoku.Model
         /// <param name="size">The number of rows and columns on the board.</param>
         /// <param name="squares">The squares within the board. Each square should have dimensions so that <paramref name="size"/> number of cells are within each square.</param>
         /// <param name="boardRepresentation">The board representation.</param>
+        /// <remarks>TO DO: Create a more generic representation so that any number of digits can be used instead of only 1-9.</remarks>
         public Board(int size, List<Square> squares, String boardRepresentation)
             :this(size, squares)
         {
