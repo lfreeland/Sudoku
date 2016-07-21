@@ -14,7 +14,7 @@ namespace Sudoku.Solver
     {
         public override void Solve(Board board)
         {
-            Possibilities possibilities = new Possibilities();
+            Possibilities possibilities = new Possibilities(board.Rows.Count);
 
             foreach (int possibility in possibilities.Values)
             {

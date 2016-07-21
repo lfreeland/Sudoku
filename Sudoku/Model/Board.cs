@@ -13,17 +13,17 @@ namespace Sudoku.Model
     public class Board
     {
         /// <summary>
-        /// The 9 horizontal rows on the board. Each row contains 9 cells.
+        /// The horizontal rows on the board. Each row contains cells.
         /// </summary>
         public IReadOnlyList<Row> Rows { get; private set; }
 
         /// <summary>
-        /// The 9 vertical columns on the board.  Each column contains 9 cells.
+        /// The vertical columns on the board.  Each column contains cells.
         /// </summary>
         public IReadOnlyList<Column> Columns { get; private set; }
 
         /// <summary>
-        /// The 9 3x3 squares on the board. Each square contains 9 cells.
+        /// The squares on the board. Each square contains cells.
         /// </summary>
         public IReadOnlyList<Square> Squares { get; private set; }
 
@@ -33,21 +33,75 @@ namespace Sudoku.Model
         public IReadOnlyCollection<CellCollection> AllCellCollections { get; private set; }
 
         /// <summary>
-        /// Creates the Rows, Columns, and Squares on the board. The Rows, Columns, 
+        /// Creates 9 Rows, 9 Columns, and 9 3x3 Squares on the board. The Rows, Columns, 
         /// and Squares share the cells among them so that when the Value or Possibilities
         /// are changed, the row, column and square containing that cell see the changes.
         /// </summary>
         public Board()
+            : this(9, new List<Square>())
+        {
+            Square topLeft = new Square(0, 2, 0, 2);
+            Square topMiddle = new Square(0, 2, 3, 5);
+            Square topRight = new Square(0, 2, 6, 8);
+            Square middleLeft = new Square(3, 5, 0, 2);
+            Square center = new Square(3, 5, 3, 5);
+            Square middleRight = new Square(3, 5, 6, 8);
+            Square bottomLeft = new Square(6, 8, 0, 2);
+            Square bottomMiddle = new Square(6, 8, 3, 5);
+            Square bottomRight = new Square(6, 8, 6, 8);
+
+            Squares = new List<Square> { topLeft, topMiddle, topRight, middleLeft, center, middleRight, bottomLeft, bottomMiddle, bottomRight };
+
+            populateSquareRows(Squares);
+        }
+
+        /// <summary>
+        /// Constructs a 9x9 board using an 81 digit string representation of the board.
+        /// The representation is constructed by reading a 9x9 board row by row
+        /// from left to right starting at the top row and going down. If the cell
+        /// has no value, enter 0. Otherwise, enter the 1-9 digit that's in that cell.
+        /// </summary>
+        /// <param name="boardRepresentation"></param
+        /// <remarks>TO DO: Create a more generic representation so that any number of digits can be used instead of only 1-9.</remarks>
+        public Board(String boardRepresentation)
+            :this()
+        {
+            setBoardWithRepresentation(boardRepresentation);
+        }
+
+        /// <summary>
+        /// Constructs a size-by-size board with <paramref name="size"/> rows and <paramref name="size"/> columns using the squares provided.
+        /// Each square should have dimensions so that <paramref name="size"/> number of cells are within each square.
+        /// The representation is constructed by reading the board row by row
+        /// from left to right starting at the top row and going down. If the cell
+        /// has no value, enter 0. Otherwise, enter the 1-9 digit that's in that cell.
+        /// </summary>
+        /// <param name="size">The number of rows and columns on the board.</param>
+        /// <param name="squares">The squares within the board. Each square should have dimensions so that <paramref name="size"/> number of cells are within each square.</param>
+        /// <param name="boardRepresentation">The board representation.</param>
+        public Board(int size, List<Square> squares, String boardRepresentation)
+            :this(size, squares)
+        {
+            setBoardWithRepresentation(boardRepresentation);
+        }
+
+        /// <summary>
+        /// Constructs a size-by-size board with <paramref name="size"/> rows and <paramref name="size"/> columns using the squares provided.
+        /// Each square should have dimensions so that <paramref name="size"/> number of cells are within each square.
+        /// </summary>
+        /// <param name="size">The number of rows and columns on the board.</param>
+        /// <param name="squares">The squares within the board. Each square should have dimensions so that <paramref name="size"/> number of cells are within each square.</param>
+        public Board(int size, List<Square> squares)
         {
             List<Row> rows = new List<Row>();
             List<Column> columns = new List<Column>();
 
-            for (int rowNum = 0; rowNum < 9; ++rowNum)
+            for (int rowNum = 0; rowNum < size; ++rowNum)
             {
-                rows.Add(new Row(rowNum));
+                rows.Add(new Row(rowNum, size));
             }
 
-            for (int colNumber = 0; colNumber < 9; ++colNumber)
+            for (int colNumber = 0; colNumber < size; ++colNumber)
             {
                 Column c = new Column();
 
@@ -61,60 +115,16 @@ namespace Sudoku.Model
 
             Columns = columns;
             Rows = rows;
-
-            Square topLeft = new Square(0, 2, 0, 2, rows);
-            Square topMiddle = new Square(0, 2, 3, 5, rows);
-            Square topRight = new Square(0, 2, 6, 8, rows);
-            Square middleLeft = new Square(3, 5, 0, 2, rows);
-            Square center = new Square(3, 5, 3, 5, rows);
-            Square middleRight = new Square(3, 5, 6, 8, rows);
-            Square bottomLeft = new Square(6, 8, 0, 2, rows);
-            Square bottomMiddle = new Square(6, 8, 3, 5, rows);
-            Square bottomRight = new Square(6, 8, 6, 8, rows);
-
-            Squares = new List<Square> { topLeft, topMiddle, topRight, middleLeft, center, middleRight, bottomLeft, bottomMiddle, bottomRight };
+            Squares = squares;
 
             List<CellCollection> allCollections = new List<CellCollection>();
             allCollections.AddRange(Rows);
             allCollections.AddRange(Columns);
             allCollections.AddRange(Squares);
 
+            populateSquareRows(Squares);
+
             AllCellCollections = allCollections;
-        }
-
-        /// <summary>
-        /// Constructs a board using an 81 digit string representation of the board.
-        /// The representation is constructed by reading a 9x9 board row by row
-        /// from left to right starting at the top row and going down. If the cell
-        /// has no value, enter 0. Otherwise, enter the 1-9 digit that's in that cell.
-        /// </summary>
-        /// <param name="boardRepresentation"></param>
-        public Board(String boardRepresentation)
-            :this()
-        {
-            if (String.IsNullOrWhiteSpace(boardRepresentation))
-            {
-                throw new ArgumentNullException("The boardRepresentation is null or empty.");
-            }
-
-            if (boardRepresentation.Length != 81)
-            {
-                throw new ApplicationException("Expected the board representation to have 81 characters representing 81 cells. There are " + boardRepresentation.Length + " characters.");
-            }
-
-            for (int i = 0; i < boardRepresentation.Length; ++i)
-            {
-                int row = i / 9;
-                int column = i % 9;
-
-                char valueChar = boardRepresentation[i];
-
-                if (valueChar != '0')
-                {
-                    int value = int.Parse(valueChar.ToString());
-                    setCellValue(row, column, value);
-                }
-            }
         }
 
         /// <summary>
@@ -266,6 +276,43 @@ namespace Sudoku.Model
                 }
 
                 Debug.Write(Environment.NewLine);
+            }
+        }
+
+        private void populateSquareRows(IReadOnlyList<Square> squares)
+        {
+            foreach (Square sq in squares)
+            {
+                sq.PopulateRows(Rows);
+            }
+        }
+
+        private void setBoardWithRepresentation(String boardRepresentation)
+        {
+            if (String.IsNullOrWhiteSpace(boardRepresentation))
+            {
+                throw new ArgumentNullException("The boardRepresentation is null or empty.");
+            }
+
+            int expectedBoardRepresentationLength = Rows.Count * Rows.Count;
+
+            if (boardRepresentation.Length != expectedBoardRepresentationLength)
+            {
+                throw new ApplicationException("Expected the board representation to have " + expectedBoardRepresentationLength + " characters representing " + expectedBoardRepresentationLength + " cells. There are " + boardRepresentation.Length + " characters.");
+            }
+
+            for (int i = 0; i < boardRepresentation.Length; ++i)
+            {
+                int row = i / Rows.Count;
+                int column = i % Rows.Count;
+
+                char valueChar = boardRepresentation[i];
+
+                if (valueChar != '0')
+                {
+                    int value = int.Parse(valueChar.ToString());
+                    setCellValue(row, column, value);
+                }
             }
         }
     }

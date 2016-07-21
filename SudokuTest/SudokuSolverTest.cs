@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sudoku;
 using Sudoku.Model;
+using System.Collections.Generic;
 
 namespace SudokuTest
 {
@@ -16,6 +17,27 @@ namespace SudokuTest
         private void solveSudokuBoardTest(String boardRepresentation)
         {
             Board board = new Board(boardRepresentation);
+
+            solveSudokuBoardTest(board);
+        }
+
+        private void solve6x6SudokuBoardTest(String sixBySixBoardRepresentation)
+        {
+            Square topLeft = new Square(0, 1, 0, 2);
+            Square topRight = new Square(0, 1, 3, 5);
+            Square middleLeft = new Square(2, 3, 0, 2);
+            Square middleRight = new Square(2, 3, 3, 5);
+            Square bottomLeft = new Square(4, 5, 0, 2);
+            Square bottomRight = new Square(4, 5, 3, 5);
+
+            List<Square> squares = new List<Square> { topLeft, topRight, middleLeft, middleRight, bottomLeft, bottomRight };
+
+            solveSudokuBoardTest(squares, sixBySixBoardRepresentation);
+        }
+
+        private void solveSudokuBoardTest(List<Square> squares, String boardRepresentation)
+        {
+            Board board = new Board(squares.Count, squares, boardRepresentation);
 
             solveSudokuBoardTest(board);
         }
@@ -204,13 +226,43 @@ namespace SudokuTest
         }
 
         [TestMethod]
-        public void SolveExtremeBoardTest1()
+        public void Solve6x6BoardTest1()
         {
-            // http://www.extremesudoku.info/sudoku.html
+            // http://6x6sudoku.com/ #422023 
 
-            String boardReprsentation = "000005000020080050403000602002000001070050060300000400804000903060030010000700000";
+            String sixBySixBoardRepresentation = "040030310245053600001450234061060020";
 
-            solveSudokuBoardTest(boardReprsentation);
+            solve6x6SudokuBoardTest(sixBySixBoardRepresentation);
+        }
+
+        [TestMethod]
+        public void Solve6x6BoardTest2()
+        {
+            // http://6x6sudoku.com/ #223050  
+
+            String sixBySixBoardRepresentation = "000000614532300400000000562314100600";
+
+            solve6x6SudokuBoardTest(sixBySixBoardRepresentation);
+        }
+
+        [TestMethod]
+        public void Solve6x6BoardTest3()
+        {
+            // http://sudokuplace.com/pdfs/6x6_hard_14.pdf Bottom Right Board
+
+            String sixBySixBoardRepresentation = "020000045023000030060000130250000010";
+
+            solve6x6SudokuBoardTest(sixBySixBoardRepresentation);
+        }
+
+        [TestMethod]
+        public void Solve6x6BoardTest4()
+        {
+            // http://sudokuplace.com/pdfs/6x6_hard_14.pdf Bottom Left Board
+
+            String sixBySixBoardRepresentation = "050000020045005200004300340010000020";
+
+            solve6x6SudokuBoardTest(sixBySixBoardRepresentation);
         }
     }
 }

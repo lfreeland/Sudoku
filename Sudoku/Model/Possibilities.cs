@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sudoku.Model
 {
@@ -46,11 +44,27 @@ namespace Sudoku.Model
             Values.RemoveAll(v => possibilitiesToRemove.Contains(v));
         }
 
+        /// <summary>
+        /// Populates the possibilities with 1 through 9.
+        /// </summary>
         public Possibilities()
+            : this(9)
         {
-            Values = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         }
 
+        /// <summary>
+        /// Populates the possibilities with 1 through numPossibilities.
+        /// </summary>
+        /// <param name="numPossibilities">The number of possibilities</param>
+        public Possibilities(int numPossibilities)
+        {
+            Values = Enumerable.Range(1, numPossibilities).ToList();
+        }
+
+        /// <summary>
+        /// Removes all possibilities except the specified possibilities to keep.
+        /// </summary>
+        /// <param name="possibilitiesToKeep">The possibilities to keep.</param>
         public void RemoveAllExcept(IEnumerable<int> possibilitiesToKeep)
         {
             Values.RemoveAll(v => possibilitiesToKeep.Contains(v) == false);
